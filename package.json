@@ -43,7 +43,7 @@
   },
   "browserslist": "> 0.5%, not op_mini all, not ie 11, not ios_saf < 13",
   "engines": {
-    "node": "16.17.0"
+    "node": "18.12.1"
   },
   "devDependencies": {
     "@parcel/compressor-brotli": "^2.5.0",
