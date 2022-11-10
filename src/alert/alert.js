@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { alertService, AlertType } from "./service";
-import { Alert } from "@material-tailwind/react";
 
 export default function AlertPopup() {
   const [alerts, setAlerts] = useState([]);
