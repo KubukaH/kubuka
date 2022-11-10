@@ -69,6 +69,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["slate-react", "virtual:48e810cc84720501990b8a0341b13077723aad9e73b0141b9ecd02bdcb8d57060373f9e3ce92c6fc99ed5ac3ca4e2d54f66cf8bf36835e9e52c7ab83f3d156a4#npm:0.79.0"],\
             ["tailwindcss", "virtual:48e810cc84720501990b8a0341b13077723aad9e73b0141b9ecd02bdcb8d57060373f9e3ce92c6fc99ed5ac3ca4e2d54f66cf8bf36835e9e52c7ab83f3d156a4#npm:3.2.3"],\
             ["web-vitals", "npm:2.1.4"],\
+            ["workspace", "npm:0.0.1-preview.1"],\
             ["yup", "npm:0.32.11"]\
           ],\
           "linkType": "SOFT"\
@@ -4400,6 +4401,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["slate-react", "virtual:48e810cc84720501990b8a0341b13077723aad9e73b0141b9ecd02bdcb8d57060373f9e3ce92c6fc99ed5ac3ca4e2d54f66cf8bf36835e9e52c7ab83f3d156a4#npm:0.79.0"],\
             ["tailwindcss", "virtual:48e810cc84720501990b8a0341b13077723aad9e73b0141b9ecd02bdcb8d57060373f9e3ce92c6fc99ed5ac3ca4e2d54f66cf8bf36835e9e52c7ab83f3d156a4#npm:3.2.3"],\
             ["web-vitals", "npm:2.1.4"],\
+            ["workspace", "npm:0.0.1-preview.1"],\
             ["yup", "npm:0.32.11"]\
           ],\
           "linkType": "SOFT"\
@@ -6401,6 +6403,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/wordwrap-npm-1.0.0-ae57a645e8-2a44b27881.zip/node_modules/wordwrap/",\
           "packageDependencies": [\
             ["wordwrap", "npm:1.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["workspace", [\
+        ["npm:0.0.1-preview.1", {\
+          "packageLocation": "./.yarn/cache/workspace-npm-0.0.1-preview.1-37e8956085-0d3a1ed8a5.zip/node_modules/workspace/",\
+          "packageDependencies": [\
+            ["workspace", "npm:0.0.1-preview.1"]\
           ],\
           "linkType": "HARD"\
         }]\
