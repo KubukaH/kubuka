@@ -1,0 +1,3 @@
+/api/* /.netlify/functions/:splat
+/admin/* 200!  Role=Editor,Admin,SuperUser,Reviewer
+/admin/* /account/signin 401!

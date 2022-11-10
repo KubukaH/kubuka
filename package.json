@@ -1,0 +1,67 @@
+{
+  "name": "kubuka",
+  "packageManager": "yarn@3.2.4",
+  "private": true,
+  "version": "0.2.0",
+  "source": "public/index.html",
+  "scripts": {
+    "watch": "parcel watch",
+    "build": "parcel build",
+    "start": "parcel --https --open"
+  },
+  "dependencies": {
+    "@emotion/css": "^11.9.0",
+    "@emotion/react": "^11.9.0",
+    "@fortawesome/fontawesome-free": "^6.1.1",
+    "@headlessui/react": "^1.6.2",
+    "@heroicons/react": "^1.0.6",
+    "@material-tailwind/react": "^1.2.4",
+    "cookie": "^0.5.0",
+    "daisyui": "^2.38.0",
+    "faunadb": "^4.5.4",
+    "formik": "^2.2.9",
+    "gotrue-js": "^0.9.29",
+    "graphql": "^15",
+    "is-hotkey": "^0.2.0",
+    "node-fetch": "^3.2.6",
+    "process": "^0.11.10",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.3.0",
+    "rxjs": "^7.5.5",
+    "slate": "^0.78.0",
+    "slate-history": "^0.66.0",
+    "slate-react": "^0.79.0",
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
+  },
+  "alias": {
+    "process": {
+      "global": "process"
+    }
+  },
+  "browserslist": "> 0.5%, not op_mini all, not ie 11, not ios_saf < 13",
+  "engines": {
+    "node": "16.17.0"
+  },
+  "devDependencies": {
+    "@parcel/compressor-brotli": "^2.5.0",
+    "@parcel/compressor-gzip": "^2.5.0",
+    "@parcel/config-default": "^2.5.0",
+    "@parcel/core": "^2.5.0",
+    "@parcel/resolver-default": "^2.5.0",
+    "@parcel/transformer-raw": "^2.5.0",
+    "@parcel/transformer-svg-react": "^2.5.0",
+    "@remix-run/router": "^1.0.0",
+    "@sendgrid/mail": "^7.7.0",
+    "@tailwindcss/aspect-ratio": "^0.4.0",
+    "@tailwindcss/forms": "^0.5.2",
+    "@tailwindcss/line-clamp": "^0.4.0",
+    "buffer": "^6.0.3",
+    "handlebars": "^4.7.7",
+    "parcel": "^2.6.2",
+    "path": "^0.12.7",
+    "postcss": "^8.4.14",
+    "tailwindcss": "^3.0.24"
+  }
+}

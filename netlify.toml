@@ -1,0 +1,17 @@
+[build]
+  command = "yarn run build" # the command you run to build this file
+  functions = "functions"
+  publish = "dist" # create-react-app builds to this folder, Netlify should serve all these files statically
+  
+  [[redirects]]
+    from = "/*"
+    to = "/index.html"
+    status = 200
+
+  # note: netlify dev works out of the box with parcel-bundler (or create-react-app)
+  [dev]
+  framework = "parcel"
+  command = "yarn run start"
+  
+  [[plugins]]
+    package = "@netlify/plugin-emails"

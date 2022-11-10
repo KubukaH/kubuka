@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.blog-pattern-bg {
+  @apply bg-[#2e436e]
+}

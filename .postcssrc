@@ -1,0 +1,7 @@
+{
+  "plugins": {
+    "tailwindcss": {}
+  },
+  "extends": "@parcel/config-default",
+  "resolvers": ["@company/parcel-resolver", "..."]
+}
