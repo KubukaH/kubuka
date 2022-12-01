@@ -1,10 +1,7 @@
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { getImageById } from "../assets/images";
-import { useCTX } from "../components/context";
 
 const BlogIndex = () => {
-  const { articles } = useCTX();
-  const { postid } = useParams();
   return (
     <>
     <div className="hero relative overflow-hidden h-[210px]">
@@ -18,27 +15,12 @@ const BlogIndex = () => {
       <div className="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed">
         <div className="flex justify-center items-center h-full">
           <div className="text-center text-white px-6 md:px-12">
-            {postid 
-            ? articles.filter(x => x.blog_title.split(" ").map(x => x).join("-").toLowerCase() === postid).map((art) => (
-              <div key={art.blog_title}>
-              <h1 className="text-5xl font-bold mt-0 mb-6">
-                {art.blog_title}
-              </h1>
-              <h5 className="text-3xl font-bold mb-8"> 
-                {art.author || `${art.first_name} ${art.last_name}` || null}
-              </h5>
-              </div>
-            )) 
-            : (
-              <>
-              <h1 className="text-5xl font-bold mt-0 mb-6">
-                Kubuka Spotlight 
-              </h1>
-              <p className="max-w-2xl text-xl lg:mx-auto mb-8">
-                Make believe the expectations and you will make the day shine brighter.   
-              </p>
-              </>
-            )}
+            <h1 className="text-5xl font-bold mt-0 mb-6">
+              Kubuka Spotlight 
+            </h1>
+            <p className="max-w-2xl text-xl lg:mx-auto mb-8">
+              Make believe the expectations and you will make the day shine brighter.   
+            </p>
           </div>
         </div>
       </div>

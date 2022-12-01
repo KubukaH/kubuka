@@ -1,10 +1,11 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { LockClosedIcon, RefreshIcon } from '@heroicons/react/solid';
+import { LockClosedIcon } from '@heroicons/react/solid';
 
 import useLoading from '../components/load';
 import { alertService } from '../alert/service';
 import { useInput } from '../components/hooks/useInput';
 import userAuth from '../function/db';
+import RefreshingIcon from '../components/refresh';
 
 const SignIn = () => {
   const [isLoading, load] = useLoading();
@@ -49,7 +50,7 @@ const SignIn = () => {
               <span className="label-text">Email</span>
             </label>
             <input 
-              type="text" 
+              type="email" 
               placeholder="email" 
               className="input input-bordered"
               {...email.bind}
@@ -81,7 +82,7 @@ const SignIn = () => {
               Login
               {isLoading && (
               <span className="absolute right-0 inset-y-0 flex items-center pr-3">
-                <RefreshIcon className="h-5 w-5 animate-spin text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
+                <RefreshingIcon />
               </span>)}
             </button>
           </div>

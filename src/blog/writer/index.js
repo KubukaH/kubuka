@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { RefreshIcon } from "@heroicons/react/solid";
 import { Form, Formik, useField } from 'formik';
 import * as yup from 'yup';
 
@@ -11,6 +10,7 @@ import { category, nameTitles } from "../../constants";
 import { newItem } from "../../function/operations";
 import EditorPage from "./editor";
 import { useCTX } from "../../components/context";
+import RefreshingIcon from "../../components/refresh";
 
 const MyTextInput = ({label, ...props}) => {
   const [field, meta] = useField(props);
@@ -76,7 +76,7 @@ export default function WriterIndex() {
         })}
         onSubmit={(fields) => {
           if (
-            bValue === ""
+            !bValue === ""
           ) {
             alertService.error("One or more fields are blank.");
             return;
@@ -84,7 +84,7 @@ export default function WriterIndex() {
 
           const btitle = {...fields.blog_title};
       
-          load(newItem("Blog", { ...fields, blog_content: bValue, code: btitle })).then(() => {
+          load(newItem("Blog", { ...fields, blog_content: bValue, code: btitle, posted_on: Date.now() })).then(() => {
             alertService.success("Blog created!");
             navigate("/blog/posts", { replace: true });
           }).catch((error) => {
@@ -146,7 +146,7 @@ export default function WriterIndex() {
             {!isLoading 
             ? "Save" 
             : (
-              <RefreshIcon className="h-5 w-5 animate-spin text-indigo-500 group-hover:text-indigo-400" />
+              <RefreshingIcon />
               )
             }
           </button>

@@ -7,9 +7,9 @@ export default function BlogPosts() {
   const { articles, user } = useCTX();
 
   return (
-    <div className="grid grid-cols-3 gap-4 mb-16">
+    <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4 mb-16">
       {
-        articles ?
+        articles !== '' ?
         articles.map((ar) => (
           <div className="card w-96 bg-base-100 shadow-xl image-full" key={ar.ir}>
             <figure><img src="https://placeimg.com/400/225/arch" alt="Shoes" /></figure>

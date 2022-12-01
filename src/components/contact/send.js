@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { RefreshIcon } from '@heroicons/react/solid';
 
 import useLoading from "../load";
 import { useInput } from "../hooks/useInput";
 import { alertService } from "../../alert/service";
+import RefreshingIcon from "../refresh";
 
 const encode = (data) => {
   return Object.keys(data)
@@ -89,7 +89,7 @@ const SendMessage = () => {
                     >
                       Send Message
                       {isLoading && (
-                        <RefreshIcon className="h-5 w-5 animate-spin text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
+                        <RefreshingIcon />
                       )}
                     </button>
                   </div>

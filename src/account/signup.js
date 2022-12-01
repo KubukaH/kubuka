@@ -1,230 +1,125 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Form, Formik, useField } from 'formik';
-import { RefreshIcon } from '@heroicons/react/solid';
-import * as Yup from 'yup';
+import { useNavigate, Link } from "react-router-dom";
 
 import useLoading from "../components/load";
 import { COUNTRIES } from "../constants";
-import AlertPopup from "../alert/alert";
 import { alertService } from "../alert/service";
 import userAuth from "../function/db";
-
-const MyNameText = ({label, ...props}) => {
-  const [field, meta] = useField(props);
-  return (
-    <div className={`block col-span-6 ${props.name !== "street_address" ? "sm:col-span-3": ""}`}>
-      <label htmlFor={props.name} className="block after:content-['*'] after:ml-0.5 after:text-red-500 text-sm font-medium text-gray-700">
-        {label}
-      </label>
-      <input
-        type="text"
-        id={props.name}
-        className={`mt-1 peer focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md ${meta.touched && meta.error && "invalid:border-pink-500 invalid:text-pink-600"} focus:invalid:border-pink-500 focus:invalid:ring-pink-500`}
-        {...field}
-        {...props}
-      />
-      <p className="invisible peer-invalid:visible text-pink-600 text-sm peer-invalid:mt-2">
-        {meta.error}
-      </p>
-    </div>
-  );
-};
-
-const MyAddressInput = ({label, ...props}) => {
-  const [field, meta] = useField(props);
-  return (
-    <div className="block col-span-6 sm:col-span-6 lg:col-span-2">
-      <label htmlFor={props.name} className="block text-sm font-medium text-gray-700">
-        {label}
-      </label>
-      <input
-        type="text"
-        id={props.name}
-        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-        {...field}
-        {...props}
-      />
-    </div>
-  );
-};
-
-const MySelectInput = ({label, ...props}) => {
-  const [field, meta] = useField(props);
-  return (
-    <div className="col-span-6 sm:col-span-5">
-      <label htmlFor={props.name} className="block text-sm font-medium text-gray-700">
-        {label}
-      </label>
-      <select
-        id={props.name}
-        className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        {...field}
-        {...props}
-      />
-    </div>
-  );
-};
-
-const MyEmailInput = ({label, ...props}) => {
-  const [field, meta] = useField(props);
-  return (
-    <label className="block col-span-6 sm:col-span-3 lg:col-span-2">
-      <span className="block after:content-['*'] after:ml-0.5 after:text-red-500 text-sm font-medium text-slate-700">
-        {label}
-      </span>
-      <input 
-        type={props.type}
-        id={props.name}
-        className={`peer mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md ${meta.touched && meta.error && "invalid:border-pink-500 invalid:text-pink-600"} focus:invalid:border-pink-500 focus:invalid:ring-pink-500`}
-        {...field}
-        {...props}
-      />
-      {meta.error && <p className="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
-        {meta.error}
-      </p>}
-    </label>
-  );
-};
-
-const MyCheckbox = ({ children, ...props }) => {
-  // React treats radios and checkbox inputs differently other input types, select, and textarea.
-  // Formik does this too! When you specify `type` to useField(), it will
-  // return the correct bag of props for you -- a `checked` prop will be included
-  // in `field` alongside `name`, `value`, `onChange`, and `onBlur`
-  const [field, meta] = useField({ ...props, type: 'checkbox' });
-  return (
-    <label className="inline-flex col-span-6 items-center cursor-pointer">
-      <input
-        id="custom check signup"
-        type="checkbox"
-        className="form-checkbox border-0 rounded text-gray-800 ml-1 w-5 h-5"
-        style={{ transition: "all .15s ease" }}
-        {...field} {...props}
-      />
-      {children}
-    </label>
-  );
-};
+import { useInput } from "../components/hooks/useInput";
+import RefreshingIcon from "../components/refresh";
 
 const SignUp = () => {
   const [isLoading, load] = useLoading();
 
   const navigate = useNavigate();
+  const names = useInput('');
+  const address = useInput('');
+  const email = useInput('');
+  const password = useInput('');
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    alertService.clear();
+
+    if (!email.value || !names.value || !password.value) {
+      alertService.warn("Blank fields detected! Please Fix!");
+      return;
+    };
+
+    const user_metadata = {
+      full_name: names.value,
+      address: address.value
+    };
+
+    load(userAuth.signup(email.value, password.value, user_metadata)).then(
+      () => {
+        alertService.success("Signup Successfully. Please check your email for further instructions.");
+        navigate('/account/signin');
+      }
+    ).catch((error) => {
+      alertService.error(error);
+    });
+  }
 
   return (
-    <div className="mt-5 md:mt-0 md:col-span-2">
-      <Formik
-        initialValues={{
-          email:"", password:"", first_name: "", last_name: "", street_address: "", profile_img: null, city: "", state: "", province: "", accept_terms: false 
-        }}
-        validationSchema={Yup.object().shape({
-          first_name: Yup.string().required("* fill in"),
-          last_name: Yup.string().required("* required"),
-          email: Yup.string().email("Invalid Email").required("* required"),
-          password: Yup.string().required("* required"),
-          street_address: Yup.string().required("* required"),
-          country: Yup.string().required("* required"),
-          /*confirmPassword: Yup.string()
-            .when('password', (password, schema) => {
-              if (password) return schema.required('* required');
-            })
-            .oneOf([Yup.ref('password')], 'Not match'),
-          accept_terms: Yup.bool()
-            .oneOf([true], '* required')*/
-        })}
-        onSubmit={(fields) => {
-          alertService.clear();
-          if (fields.email === "" || fields.password === "") {return alertService.error("Blank fields!")};
-          const role = "User";
-          const user_metadata = {
-            full_name: `${fields.first_name} ${fields.last_name}`,
-            accept_terms: fields.accept_terms,
-            bio: fields.bio,
-            home_address: `${fields.street_address} ${fields.city} ${fields.province} ${fields.country}`
-          };
-
-          load(userAuth.signup(fields.email, fields.password, user_metadata)).then(() => {
-            navigate("/account/signin");
-          }).catch((error) => {
-            alertService.error(error);
-          });
-        }}
-      >
-        {() => (
-          <Form>
-            <AlertPopup />
-            <div className="shadow overflow-hidden sm:rounded-md">
-              <div className="px-4 py-5 bg-white sm:p-6">
-                <div className="grid grid-cols-6 gap-6">
-                  <MyNameText
-                    name="first_name"
-                    label={"First Name"}
-                  />
-                  <MyNameText
-                    name="last_name"
-                    label={"Last Name"}
-                  />
-                  <MyNameText
-                    name="street_address"
-                    label={"Street Address"}
-                  />
-                  <MyAddressInput
-                    name="city"
-                    label="City"
-                  />
-                  <MyAddressInput
-                    name="state"
-                    label="State"
-                  />
-                  <MyAddressInput
-                    name="province"
-                    label="Province/ZIP"
-                  />
-                  <MySelectInput
-                    name="country"
-                    label="Country"
-                  >
-                    <option value={""}>Select Country</option>
-                    {COUNTRIES.map((c) => (
-                      <option key={c.code} value={c.label}>
-                        {c.label}
-                      </option>
-                    ))}
-                  </MySelectInput>
-                  <MyEmailInput
-                    name="email"
-                    type="email"
-                    label="Email Address"
-                  />
-                  <MyEmailInput
-                    name="password"
-                    type="password"
-                    label="Password"
-                  />
-                  <MyCheckbox name="accept_terms">
-                    <span className="ml-2 text-sm font-semibold text-gray-700">
-                      Accept the terms and Conditions
-                    </span>
-                  </MyCheckbox>
-                </div>
-              </div>
-            <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-              <button
-                type="submit"
-                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                disabled={isLoading}
-              >
-                Save
-                {isLoading && (
-                    <RefreshIcon className="h-5 w-5 animate-spin text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />)}
-              </button>
-            </div>
-          </div>
-          </Form>
-        )}
-      </Formik>
+    <>
+    <div className="text-center lg:text-left">
+      <h1 className="text-5xl font-bold">Sign UP!</h1>
+      <p className="py-6">Provide your email address and a password. Make the password strong.</p>
     </div>
+    <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+      <div className="card-body">
+        <form onSubmit={onSubmit}>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">First and Last Name</span>
+            </label>
+            <input 
+              type="text" 
+              placeholder="First and Last Name" 
+              className="input input-bordered"
+              {...names.bind}
+            />
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Address</span>
+            </label>
+            <input 
+              type="text" 
+              placeholder="Address" 
+              className="input input-bordered"
+              {...address.bind}
+            />
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Email</span>
+            </label>
+            <input 
+              type="email" 
+              placeholder="email" 
+              className="input input-bordered"
+              {...email.bind}
+            />
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Password</span>
+            </label>
+            <input 
+              type="password" 
+              placeholder="password" 
+              className="input input-bordered"
+              {...password.bind}
+            />
+            <label className="label">
+              <Link to="/account/signin" className="label-text-alt link link-hover">Have an account?</Link>
+            </label>
+          </div>
+          <div className="form-control mt-6">
+            <button 
+              className="btn btn-primary group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              type='submit'
+              disabled={isLoading}
+            >
+              <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-indigo-500 group-hover:text-indigo-400">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
+                </svg>
+              </span>
+              Sign UP
+              {isLoading && (
+              <span className="absolute right-0 inset-y-0 flex items-center pr-3">
+                <RefreshingIcon />
+              </span>)}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    </>
   );
 };
 

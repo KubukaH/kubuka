@@ -12,6 +12,3 @@
   [dev]
   framework = "parcel"
   command = "yarn run start"
-  
-  [[plugins]]
-    package = "@netlify/plugin-emails"

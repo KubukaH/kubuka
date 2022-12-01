@@ -1,10 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { MailOpenIcon, RefreshIcon } from '@heroicons/react/outline';
+import { MailOpenIcon } from '@heroicons/react/outline';
 import userAuth from '../function/db';
 
 import useLoading from '../components/load';
 import { alertService } from '../alert/service';
 import { useInput } from '../components/hooks/useInput';
+import RefreshingIcon from '../components/refresh';
 
 const ForgotPassword = () => {
   const [isLoading, load] = useLoading();
@@ -62,7 +63,7 @@ const ForgotPassword = () => {
               Recover
               {isLoading && (
               <span className="absolute right-0 inset-y-0 flex items-center pr-3">
-                <RefreshIcon className="h-5 w-5 animate-spin text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
+                <RefreshingIcon />
               </span>)}
             </button>
           </div>

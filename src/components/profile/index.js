@@ -1,5 +1,4 @@
-import { RefreshIcon } from '@heroicons/react/solid';
-
+import RefreshingIcon from '../refresh';
 import { alertService } from '../../alert/service';
 import { COUNTRIES } from "../../constants";
 import { useInput } from '../hooks/useInput';
@@ -21,7 +20,6 @@ export default function ProfileCard() {
       full_name: `${fn.value} ${ln.value}`,
       street_address: sa.value
     };
-    console.log("Updating the user details for %s", user_metadata.full_name);
     load(user.update(user_metadata)).then((user) => {
       alertService.success("Updated the user details for %s", user.user_metadata.full_name);
     }).catch((error) => { alertService.error(error); });
@@ -285,7 +283,7 @@ export default function ProfileCard() {
                     Save
                     {isLoading && (
                     <span className="absolute right-0 inset-y-0 flex items-center pr-3">
-                      <RefreshIcon className="h-5 w-5 animate-spin text-pink-500 group-hover:text-pink-400" aria-hidden="true" />
+                      <RefreshingIcon />
                     </span>)}
                   </button>
                 </div>
